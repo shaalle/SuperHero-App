@@ -1,12 +1,21 @@
 html, body {
-    height: 100%;
-    width: 100%;
-  }
-  #getNewHero {
-    padding: 15px 50px;
-    background-color: #f64445;
-    border: 2px solid teal;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
+  height: 100%;
+  width: 100%;
+}
+#getNewHero, #search {
+  padding: 15px 50px;
+  background-color: teal;
+  border: 2px solid #f64445;
+  border-radius: 8px;
+  cursor: pointer;
+}
+input,input:focus{
+  margin-right: 18px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  font-family: 'Roboto';
+  font-size: 22px;
+  color: grey;
+  border-bottom: 2px solid blue;
+}

@@ -10,72 +10,58 @@ const SUPERHERO_TOKEN = '1488957751542023'
 const BASE_URL = `https://www.superheroapi.com/api.php/${SUPERHERO_TOKEN}`
 const getNewHeroBtn = document.getElementById('getNewHero')
 const heroImageDiv = document.getElementById('heroImageDiv')
-const todaysDate = document.getElementById('currentDateTime')
+const inputSearch = document.getElementById('inputSearch')
+const searchBtn = document.getElementById('search')
 const time = document.getElementById('time')
+// gets the generated superhero image
 const getSuperHero = (id, name) => {
-   fetch(`${BASE_URL}/${id}`)
-    .then(response => response.json())
-    .then(json => {
-      heroImageDiv.innerHTML = `<img src="${json.image.url}" height=400 width=600/>`
-      console.log(json)
-    })
-    
+  fetch(`${BASE_URL}/${id}`)
+   .then(response => response.json())
+   .then(json => {
+     console.log(json.powerstats)
+     getStatsHTML(json)
+     const name = `<h2>Name: ${json.name}</h2>`
+     const powerStats = `<ol><b>PowerStats</b><li>Intelligence: ${json.powerstats.intelligence}</li><li>Power: ${json.powerstats.power}</li><li>Speed: ${json.powerstats.speed}</li><li>Strength: ${json.powerstats.strength}</li><li>Combat: ${json.powerstats.combat}</li><li>Durability: ${json.powerstats.durability}</li></ol>`
+     heroImageDiv.innerHTML = `${name}${powerStats}<img src="${json.image.url}" height=400 width=600/>`
+     console.log(json)
+   })
+   
 
 }
 
+// gets the searched superhero image
+const getSearchSuperHero = (name) => {
+  fetch(`${BASE_URL}/search/${name}`)
+   .then(response => response.json())
+   .then(json => {
+     const hero = json.results[0]
+     heroImageDiv.innerHTML = `<img src="${hero.image.url}" height=400 width=600/>`
+     console.log(json)
+   })
+}
+
+// calling getSuperHero function after clicking Get New Hero Button
 getNewHeroBtn.onclick = () => {
   const randomId = Math.floor(Math.random()  * 731) + 1
   getSuperHero(randomId)
   console.log({randomId})
 }
 
+// calling getSearchSuperHero function after clicking Get Search Button
+searchBtn.onclick = () => getSearchSuperHero(inputSearch.value)
 
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-]
-const days = [
-  'Sun',
-  'Mon',
-  'Tue',
-  'Wed',
-  'Thu',
-  'Fri',
-  'Sat'
-]
-const d = new Date()
-const year = d.getFullYear()
-const monthIndex = d.getMonth()
-const monthName = months[monthIndex]
-const month = d.getMonth()+1 < 10 ? `0${d.getMonth()+1}` : d.getMonth()
-  const date = d.getDate() < 10 ? `0${d.getDate()}` : d.getDate()
-const dayName = days[d.getDay()]
-const hours = d.getHours()
-const minutes = d.getMinutes()
-const seconds = d.getSeconds()
-// todaysDate.innerText = `${dayName}-${date}-${monthName}-${year}, ${hours}:${minutes}:${seconds}`
-const getTime = () => {
-  todaysDate.style.fontSize='30px';
-  todaysDate.style.color='#0030c0';
-  todaysDate.innerHTML = `${month}/${date}/${year} - `
+getStatsHTML = (character) =>{
+  for(stat in character.powerstats){
+    console.log(stat)
+  }
 }
-setInterval(getTime(),1000);
-
-setInterval(myTimer, 1000);
 
 function myTimer() {
   const date = new Date();
   time.style.fontSize='30px';
-  time.style.color='#0030c0';
-  time.innerHTML = date.toLocaleTimeString();
+  time.style.color='#AF00BC';
+  time.style.marginLeft = '85%'
+  time.innerHTML = `Time: ${date.toLocaleTimeString()}`;
 }
+
+setInterval(myTimer, 1000);
