@@ -1,0 +1,12 @@
+html, body {
+    height: 100%;
+    width: 100%;
+  }
+  #getNewHero {
+    padding: 15px 50px;
+    background-color: #f64445;
+    border: 2px solid teal;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
